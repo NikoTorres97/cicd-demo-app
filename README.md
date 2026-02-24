@@ -40,3 +40,8 @@ docker run -p 3000:3000 cicd-demo-app
 
 ## Equipo
 **Nicolas Torres / Juan Perez
+
+
+## Pipeline CI Status
+![CI](https://github.com/NikoTorres97/cicd-demo-app/actions/workflows/ci.yml/badge.svg)
+## Pipeline CI Status dos
