@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.git
+.github
+jenkins
+k8s
+docs
+tests
+*.md
+.env*
+coverage
