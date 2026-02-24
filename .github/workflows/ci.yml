@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [main, desarrollo]
+    branches: [main, desarrollo_DevOps]
   pull_request:
-    branches: [main, desarrollo]
+    branches: [main, desarrollo_DevOps]
 
 env:
   NODE_VERSION: '20'
