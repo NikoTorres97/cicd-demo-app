@@ -78,6 +78,26 @@ pipeline {
                 echo "Stage validated - K8s deployment defined"
             }
         }
+
+          stage('Deploy to Kubernetes with Helm') {
+            
+             agent {
+               kubernetes {
+                     containerTemplate {
+                       name 'helm'
+                       image 'lachlanevenson/k8s-helm:v3.1.1'
+                       ttyEnabled true
+                       command 'cat'
+                  }
+                }
+             }
+                
+                steps {
+                   container('helm') { 
+                     sh "helm upgrade --install ./k8s/cicd-demo-app"
+                   }    
+                 }
+        }
  
         stage('Verify Deployment') {
             steps {
