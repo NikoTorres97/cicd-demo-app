@@ -94,7 +94,7 @@ pipeline {
                 
                 steps {
                    container('helm') { 
-                     sh "helm upgrade --install ./k8s/cicd-demo-app"
+                     sh "helm upgrade cicd-demo-app --install ./k8s/cicd-demo-app --namespace production --create-namespace"
                    }    
                  }
         }
