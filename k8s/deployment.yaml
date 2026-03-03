@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: cicd-demo-app
-          image: NikoTorres97f/cicd-demo-app:latest
+          image: lokoniko97/cicd-demo-app:latest
           ports:
             - containerPort: 3000
           env:
@@ -57,7 +57,7 @@ metadata:
   name: cicd-demo-app-service
   namespace: production
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: cicd-demo-app
   ports:
@@ -73,8 +73,12 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+      - microbot.minikube.io
+      secretName: tls-certificate
   rules:
-    - host: app.DevOpsCICD.com.co
+    - host: devopscicd.minikube.io
       http:
         paths:
           - path: /
