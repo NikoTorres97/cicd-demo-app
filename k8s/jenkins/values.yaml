@@ -1,0 +1,12 @@
+jenkins:
+  controller:
+    admin:
+      password: "admin"
+      adminPassword: "admin"
+
+    serviceType: NodePort
+    servicePort: 8080
+    nodePort: 30000
+  installPlugins:
+    - "timestamper:1.30"
+    - "ws-cleanup:0.49"
