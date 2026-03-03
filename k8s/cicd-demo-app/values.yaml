@@ -1,0 +1,19 @@
+image:
+  # repository: lokoniko97/cicd-demo-app
+  # tag: latest
+  repository: cicd-demo-app-local
+  tag: 1
+  pullPolicy: IfNotPresent
+
+service:
+  name: cicd-demo-app
+  type: ClusterIP
+  targetPort: 3000
+  port: 80
+
+config:
+  APP_NAME: "cicd-demo-app"
+  APP_VERSION: "1.0.0"
+  DEBUG: false
+  HOST: "devopscicd.minikube.io"
+  PORT: 8000

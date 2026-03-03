@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.service.name }}-ingress"
+  namespace: production
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - {{ .Values.config.HOST }}
+      secretName: tls-certificate
+  rules:
+    - host: {{ .Values.config.HOST }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Values.service.name }}-service"
+                port:
+                  number: {{ .Values.service.port }}

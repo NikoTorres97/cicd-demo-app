@@ -1,0 +1,9 @@
+apiVersion: v1
+name: jenkins
+description: Continue integration
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  - name: jenkins
+    version:  5.9.2 
+    repository: https://charts.jenkins.io
