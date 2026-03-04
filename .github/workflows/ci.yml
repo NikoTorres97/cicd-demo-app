@@ -89,3 +89,24 @@ jobs:
           cache-to: type=gha,mode=max
           provenance: false
           sbom: false
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Install dependencies
+      run: npm install
+    - name: Run Snyk scan
+      uses: snyk/actions/node@master
+      with:
+        args: --file=package.json --severity-threshold=medium --sarif-file-output=snyk.sarif
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      continue-on-error: true # Allows the workflow to continue even if issues are found, so the SARIF file can be uploaded
+    - name: Upload Snyk results to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: snyk.sarif
