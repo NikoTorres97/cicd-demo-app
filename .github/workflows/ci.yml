@@ -62,6 +62,7 @@ jobs:
          uses: SonarSource/sonarqube-scan-action@v2.1.0
          env:
            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+           SONAR_HOST_URL: https://sonarcloud.io
   security-scan:
     name: "Security Audit"
     runs-on: ubuntu-latest
