@@ -37,7 +37,7 @@ jobs:
           name: coverage-report
           path: coverage/
           retention-days: 5
-   sonarqube:
+  sonarqube:
      
      runs-on: ubuntu-latest
      name: "Code analysis - SonarQube"
