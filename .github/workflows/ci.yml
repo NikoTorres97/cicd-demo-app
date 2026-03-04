@@ -37,11 +37,35 @@ jobs:
           name: coverage-report
           path: coverage/
           retention-days: 5
+   sonarqube:
+     
+     runs-on: ubuntu-latest
+     name: "Code analysis - SonarQube"
+     steps:
+       - name: Checkout Code
+         uses: actions/checkout@v4
+         with:
+           fetch-depth: 0 # Required for accurate analysis of branches/PRs
  
+       - name: Set up Node.js
+         uses: actions/setup-node@v4
+         with:
+           node-version: ${{ secrets.SONAR_TOKEN }} # Or the version you are using
+ 
+       - name: Install Dependencies
+         run: npm install
+ 
+       - name: Run Tests with Coverage
+         run: npm test -- --coverage # Ensure this command generates an lcov.info file
+ 
+       - name: SonarQube Scan
+         uses: SonarSource/sonarqube-scan-action@v2.1.0
+         env:
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   security-scan:
     name: "Security Audit"
     runs-on: ubuntu-latest
-    needs: lint-and-test
+    needs: [lint-and-test, sonarqube]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,9 +75,9 @@ jobs:
       - run: npm ci
       - run: npm audit --audit-level=high || true
   snyk-scan:
-    name: "Dependecies analysis"
+    name: "Dependecies analysis - Snyk"
     runs-on: ubuntu-latest
-    needs: lint-and-test
+    needs: [lint-and-test, sonarqube]
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
@@ -76,7 +100,7 @@ jobs:
   docker-build:
     name: "Docker Build"
     runs-on: ubuntu-latest
-    needs: lint-and-test
+    needs: [lint-and-test, sonarqube]
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
