@@ -49,6 +49,7 @@ jobs:
   snyk-scan:
     name: "Dependecies analysis"
     runs-on: ubuntu-latest
+    needs: lint-and-test
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
