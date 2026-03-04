@@ -50,7 +50,7 @@ jobs:
        - name: Set up Node.js
          uses: actions/setup-node@v4
          with:
-           node-version: ${{ secrets.SONAR_TOKEN }} # Or the version you are using
+           node-version: ${{ env.NODE_VERSION }} # Or the version you are using
  
        - name: Install Dependencies
          run: npm install
