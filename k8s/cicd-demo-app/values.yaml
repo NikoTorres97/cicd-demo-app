@@ -1,8 +1,6 @@
 image:
-  # repository: lokoniko97/cicd-demo-app
-  # tag: latest
-  repository: cicd-demo-app-local
-  tag: 1
+  repository: lokoniko97/cicd-demo-app
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:

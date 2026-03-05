@@ -3,7 +3,7 @@ pipeline {
  
     environment {
         APP_NAME     = 'cicd-demo-app'
-        DOCKER_IMAGE = "pulidof/${APP_NAME}"
+        DOCKER_IMAGE = "lokoniko97/${APP_NAME}"
     }
  
     options {

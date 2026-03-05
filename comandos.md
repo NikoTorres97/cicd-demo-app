@@ -52,3 +52,5 @@ curl --request GET --url 'http://myprom-prometheus-server:80/api/v1/query?query=
 ## Jekins
 
 helm install jenkins ./k8s/jenkins --namespace jenkins --create-namespace
+
+kubectl auth can-i list secrets --namespace production --as=system:serviceaccount:jenkins:default
