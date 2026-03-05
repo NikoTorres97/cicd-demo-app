@@ -62,43 +62,6 @@ pipeline {
             }
         }
  
-        stage('Publish to Registry') {
-            steps {
-                echo "Publishing to DockerHub: ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT}"
-                echo "Tags: ${GIT_COMMIT_SHORT}, latest, build-${BUILD_NUMBER}"
-                echo "Stage validated - Push handled by GitHub Actions CI pipeline"
-            }
-        }
- 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         echo "Deploying ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} to namespace production"
-        //         echo "kubectl set image deployment/${APP_NAME} ${APP_NAME}=${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} -n production"
-        //         echo "kubectl annotate deployment/${APP_NAME} kubernetes.io/change-cause='Build #${BUILD_NUMBER}' -n production --overwrite"
-        //         echo "Stage validated - K8s deployment defined"
-        //     }
-        // }
-
-          stage('Deploy to Kubernetes with Helm') {
-            
-             agent {
-               kubernetes {
-                     containerTemplate {
-                       name 'helm'
-                       image 'lachlanevenson/k8s-helm:v3.1.1'
-                       ttyEnabled true
-                       command 'cat'
-                  }
-                }
-             }
-                
-                steps {
-                   container('helm') { 
-                     sh "helm upgrade ${APP_NAME} --install ./k8s/${APP_NAME} --namespace production"
-                   }    
-                 }
-        }
- 
         stage('Verify Deployment') {
             steps {
                 echo "Verifying deployment rollout..."
