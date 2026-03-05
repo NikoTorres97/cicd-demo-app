@@ -53,13 +53,26 @@ pipeline {
                 '''
             }
         }
- 
-        stage('Build Docker Image') {
-            steps {
-                echo "Building Docker image: ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT}"
-                echo "Docker build would execute: docker build -t ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} ."
-                echo "Stage validated - Docker daemon not available inside K8s pod"
-            }
+
+
+        stage('Deploy to Kubernetes with Helm') {
+            
+             agent {
+               kubernetes {
+                     containerTemplate {
+                       name 'helm'
+                       image 'lachlanevenson/k8s-helm:v3.1.1'
+                       ttyEnabled true
+                       command 'cat'
+                  }
+                }
+             }
+                
+                steps {
+                   container('helm') { 
+                     sh "helm upgrade ${APP_NAME} --install ./k8s/${APP_NAME} --namespace production"
+                   }    
+                 }
         }
  
         stage('Verify Deployment') {
