@@ -70,14 +70,14 @@ pipeline {
             }
         }
  
-        stage('Deploy to Kubernetes') {
-            steps {
-                echo "Deploying ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} to namespace production"
-                echo "kubectl set image deployment/${APP_NAME} ${APP_NAME}=${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} -n production"
-                echo "kubectl annotate deployment/${APP_NAME} kubernetes.io/change-cause='Build #${BUILD_NUMBER}' -n production --overwrite"
-                echo "Stage validated - K8s deployment defined"
-            }
-        }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         echo "Deploying ${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} to namespace production"
+        //         echo "kubectl set image deployment/${APP_NAME} ${APP_NAME}=${DOCKER_IMAGE}:${GIT_COMMIT_SHORT} -n production"
+        //         echo "kubectl annotate deployment/${APP_NAME} kubernetes.io/change-cause='Build #${BUILD_NUMBER}' -n production --overwrite"
+        //         echo "Stage validated - K8s deployment defined"
+        //     }
+        // }
 
           stage('Deploy to Kubernetes with Helm') {
             
